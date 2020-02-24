@@ -3,3 +3,11 @@
 #    controller: App\Controller\DefaultController::index
 sso_auth:
     path: /authenticate/sso
+
+authenticate:
+    path: /authenticate
+    defaults:
+        _controller: App\Controller\AuthenticateAction
+
+logout:
+    path: /authenticate/logout

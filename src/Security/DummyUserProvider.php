@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Security;
 
+use App\Model\DummyUser;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\User;
@@ -28,7 +29,7 @@ class DummyUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername(string $username)
     {
-        return new User($username, md5($username), ['ROLE_USER']);
+        return new DummyUser($username, md5($username), ['ROLE_USER']);
     }
 
     /**
@@ -46,7 +47,7 @@ class DummyUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        return new User($user->getUsername(), md5($user->getPassword()), $user->getRoles());
+        return new DummyUser($user->getUsername(), md5($user->getPassword()), $user->getRoles());
     }
 
     /**
@@ -56,6 +57,6 @@ class DummyUserProvider implements UserProviderInterface
      */
     public function supportsClass(string $class)
     {
-        return 'Symfony\Component\Security\Core\User\User' === $class;
+        return DummyUser::class === $class;
     }
 }

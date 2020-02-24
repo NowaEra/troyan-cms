@@ -14,9 +14,11 @@
         "symfony/framework-bundle": "5.0.*",
         "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
+        "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "5.0.*"
     },
     "require-dev": {
+        "symfony/maker-bundle": "^1.14"
     },
     "config": {
         "preferred-install": {
