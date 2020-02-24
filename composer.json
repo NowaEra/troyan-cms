@@ -5,10 +5,15 @@
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "hwi/oauth-bundle": "dev-master@dev",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/httplug-bundle": "^1.17",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "5.0.*",
+        "symfony/profiler-pack": "^1.0",
+        "symfony/security-bundle": "5.0.*",
         "symfony/yaml": "5.0.*"
     },
     "require-dev": {
@@ -55,7 +60,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.0.*"
         }
     }

@@ -1,0 +1,20 @@
+hwi_oauth:
+    # list of names of the firewalls in which this bundle is active, this setting MUST be set
+    firewall_names: [main]
+
+    # https://github.com/hwi/HWIOAuthBundle/blob/master/Resources/doc/2-configuring_resource_owners.md
+    resource_owners:
+        sso:
+            type:                oauth2
+            client_id:           '%sso_client_id%'
+            client_secret:       '%sso_client_secret%'
+            access_token_url:    '%sso_host%/oauth/v2/token'
+            authorization_url:   '%sso_host%/oauth/v2/auth'
+            infos_url:           '%sso_host%/api/user/me'
+            user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
+            paths:
+                identifier: id
+                nickname:   username
+                realname:   fullname
+                roles:      roles
+
