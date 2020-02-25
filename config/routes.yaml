@@ -11,3 +11,8 @@ authenticate:
 
 logout:
     path: /authenticate/logout
+
+admin:
+    path: /admin
+    defaults:
+        _controller: App\Controller\AdminAction

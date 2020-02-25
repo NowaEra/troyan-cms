@@ -24,6 +24,7 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
+    .addEntry('admin', './assets/js/admin.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
@@ -56,6 +57,22 @@ Encore
     // enables Sass/SCSS support
     .enableSassLoader()
 
+    // copy files
+    .copyFiles({
+        from: './node_modules/@coreui/icons/sprites',
+        to: '@coreui/sprites/[path][name].[ext]',
+        pattern: /\.(svg)$/
+    })
+    .copyFiles({
+        from: './node_modules/@coreui/coreui-free-bootstrap-admin-template/src/assets/img/avatars',
+        to: '@coreui/avatars/[path][name].[ext]',
+        pattern: /\.(jpg|bmp|png)$/
+    })
+    .copyFiles({
+        from: './node_modules/@coreui/coreui-free-bootstrap-admin-template/src/assets/brand',
+        to: '@coreui/brand/[path][name].[ext]',
+        pattern: /\.(svg)$/
+    })
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
