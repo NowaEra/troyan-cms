@@ -1,0 +1,19 @@
+{% extends "@KnpMenu/menu.html.twig" %}
+{% block linkElement %}
+    {% import _self as knp_menu %}
+    <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
+        {% if item.extras.icon is defined %}
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ item.extras.icon }}"></use>
+            </svg>
+        {% endif %}
+        {{ block('label') }}
+        {% if item.extras.badge is defined %}
+            {% set badgeAttributes = {} %}
+            {% if item.extras.badgeAttributes is defined %}
+                {% set badgeAttributes = item.extras.badgeAttributes %}
+            {% endif %}
+            <span{{ knp_menu.attributes({'class': 'badge badge-info'}|merge(badgeAttributes)) }}>{{ item.extras.badge|trans({}, 'admin_menu') }}</span>
+        {% endif %}
+    </a>
+{% endblock %}

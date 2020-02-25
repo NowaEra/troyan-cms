@@ -27,11 +27,17 @@
             "./config/routes/hwi_oauth_routing.yaml"
         ]
     },
+    "knplabs/knp-menu": {
+        "version": "v3.1.0"
+    },
+    "knplabs/knp-menu-bundle": {
+        "version": "v3.0.0"
+    },
     "nikic/php-parser": {
         "version": "v4.3.0"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-http/client-common": {
         "version": "2.1.0"
@@ -265,6 +271,19 @@
     },
     "symfony/templating": {
         "version": "v5.0.4"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "./config/packages/translation.yaml",
+            "./translations/.gitignore"
+        ]
     },
     "symfony/translation-contracts": {
         "version": "v2.0.1"

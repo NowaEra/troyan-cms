@@ -27,3 +27,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Menu\Admin\AdminMenuBuilder:
+        arguments:
+            - "@knp_menu.factory"
+        tags:
+            - { name: "knp_menu.menu_builder", method: "sidebarMenu", alias: "admin_main" }
+
+# Example listener that adds "dashboard" menu into root
+    App\Event\Listener\AdminMenuListener:
+        tags:
+            - { name: "kernel.event_listener", event: App\Event\ConfigureMenuEvent, method: "onMenu" }

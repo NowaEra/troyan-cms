@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "hwi/oauth-bundle": "dev-master@dev",
+        "knplabs/knp-menu-bundle": "^3.0",
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug-bundle": "^1.17",
         "symfony/console": "5.0.*",
@@ -14,6 +15,7 @@
         "symfony/framework-bundle": "5.0.*",
         "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
+        "symfony/translation": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "5.0.*"
     },
