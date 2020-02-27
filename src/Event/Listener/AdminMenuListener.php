@@ -33,7 +33,7 @@ class AdminMenuListener
     {
         $menu = $this->factory->createItem(
             'admin.admin_menu.dashboard.label',
-            ['route' => 'admin']
+            ['route' => 'admin_dashboard']
         );
         $menu->setExtra('icon', 'build/@coreui/sprites/free.svg#cil-speedometer');
         AdminMenuBuilder::setDefaultMenuAttributes($menu);

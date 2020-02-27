@@ -37,3 +37,7 @@ services:
     App\Event\Listener\AdminMenuListener:
         tags:
             - { name: "kernel.event_listener", event: App\Event\ConfigureMenuEvent, method: "onMenu" }
+
+    App\Block\:
+        resource: '../src/Block/*'
+        tags: ['sonata.block']

@@ -1,0 +1,6 @@
+{% extends "admin/base.html.twig" %}
+{% block dashboard_content %}
+    <!-- rendering blocks for "{{ app.request.get('_route') }}" -->
+    {{ sonata_block_render({type: 'App\\Block\\Admin\\PagesStatisticsBlock'}, {template: 'admin/block/page_statistics/extended.html.twig'}) }}
+    {{ sonata_block_render_event(app.request.get('_route')) }}
+{% endblock %}

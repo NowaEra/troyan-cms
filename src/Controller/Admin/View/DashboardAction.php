@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin\View;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAction extends AbstractController
+class DashboardAction extends AbstractController
 {
     public function __invoke(): Response
     {
         return $this->render(
-            'admin/base.html.twig',
+            'admin/view/dashboard.html.twig',
             []
         );
     }
