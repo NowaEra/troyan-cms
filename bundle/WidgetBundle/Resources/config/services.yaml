@@ -1,0 +1,19 @@
+parameters:
+    cms.widget.repository.class: WidgetBundle\Widget\WidgetRepository
+    cms.widget.simple_context_factory.class: WidgetBundle\Model\SimpleContextFactory
+    cms.widget.twig_extension.class: WidgetBundle\Twig\Extension\WidgetExtension
+
+services:
+    cms.widget.repository:
+        class: "%cms.widget.repository.class%"
+
+    cms.widget.simple_context_factory:
+        class: "%cms.widget.simple_context_factory.class%"
+
+    cms.widget.twig_extension:
+        class: "%cms.widget.twig_extension.class%"
+        arguments:
+            - '@cms.widget.repository'
+            - '@cms.widget.simple_context_factory'
+        tags:
+            - { name: "twig.extension" }

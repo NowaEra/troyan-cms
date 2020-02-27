@@ -38,6 +38,6 @@ services:
         tags:
             - { name: "kernel.event_listener", event: App\Event\ConfigureMenuEvent, method: "onMenu" }
 
-    App\Block\:
-        resource: '../src/Block/*'
-        tags: ['sonata.block']
+    App\Widgets\:
+        resource: '../src/Widgets/*'
+        tags: ['cms.widget']
