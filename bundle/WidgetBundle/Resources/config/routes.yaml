@@ -1,0 +1,15 @@
+widget_create:
+    path: /widget/create/{widgetId}
+    methods: GET
+    defaults:
+        _controller: "cms.widget.controller.create_widget"
+    requirements:
+        widgetId: '[a-z\.\_]+'
+
+widget_create_post:
+    path: /widget/create/{widgetId}
+    methods: POST
+    defaults:
+        _controller: "cms.widget.controller.create_widget:post"
+    requirements:
+        widgetId: '[a-z\.\_]+'

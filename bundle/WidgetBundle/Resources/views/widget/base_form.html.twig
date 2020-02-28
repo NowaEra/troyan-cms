@@ -1,0 +1,78 @@
+<html>
+    <head></head>
+    <body>
+        {% set normalisedJavascriptId = id | replace({'.': '__'}) %}
+        {% set formId = 'form-' ~ normalisedJavascriptId %}
+        {% set javascriptFormQuery = 'form#' ~ formId %}
+        <div id="{{ 'container-form-' ~ normalisedJavascriptId }}">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': formId, 'name': normalisedJavascriptId}}) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="form-control btn btn-primary">{{ 'widget.form.submit.label'|trans() }}</button>
+            {{ form_end(form) }}
+        </div>
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            const controllerPath = '{{ url('widget_create_post', {widgetId: id})|escape('js') }}';
+            const widgetId = '{{ id }}';
+            let pending = false;
+            let serializeFn = ($form) => {
+                var unindexed_array = $form.serializeArray();
+                var indexed_array = {};
+
+                $.map(unindexed_array, function (n, i) {
+                    indexed_array[n['name']] = n['value'];
+                });
+
+                return indexed_array;
+            };
+            let handleResponseFn = function (data) {
+                const $existingForm = $('{{ javascriptFormQuery }}');
+                pending = true;
+                const $newForm = $(data).find('{{ javascriptFormQuery }}');
+                $existingForm.off('submit');
+                $newForm.on('submit', submitFn);
+                $existingForm.replaceWith($newForm);
+                pending = false;
+            };
+            let submitFn = function (e) {
+                if (pending === false) {
+                    const $existingForm = $('{{ javascriptFormQuery }}');
+                    let data = {};
+                    $existingForm
+                        .serializeArray()
+                        .map(function (item) {
+                            if (data[item.name]) {
+                                if (typeof (data[item.name]) === "string") {
+                                    data[item.name] = [data[item.name]];
+                                }
+                                data[item.name].push(item.value);
+                            } else {
+                                data[item.name] = item.value;
+                            }
+                        });
+                    $existingForm.find('button[type=submit],input').attr('disabled', 'disabled');
+                    $.ajax({
+                        url: controllerPath,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: handleResponseFn,
+                        error: function (xhr, err) {
+                            if (xhr.status === 400) {
+                                handleResponseFn(xhr.responseText);
+                                return;
+                            }
+                            console.error(err);
+                        }
+                    })
+                    ;
+                }
+                return false;
+            };
+            $('{{ javascriptFormQuery }}').on('submit', submitFn);
+        </script>
+    </body>
+</html>

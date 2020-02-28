@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace App\Widgets\Admin;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Twig\Environment;
 use WidgetBundle\Model\SimpleContextFactory;
 use WidgetBundle\Model\WidgetContextInterface;
@@ -74,4 +78,10 @@ class SideMenuWidget extends AbstractWidget implements WidgetInterface
     {
         return $this->factory->fromArray($this->id, []);
     }
+
+    public function configureCreateForm(FormBuilderInterface $builder, WidgetContextInterface $context): void
+    {
+        $builder->add('text', TextType::class, ['required' => true, 'constraints' => [new NotBlank(), new Length(['min' => 5])]]);
+    }
+
 }

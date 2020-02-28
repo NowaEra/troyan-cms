@@ -17,3 +17,12 @@ services:
             - '@cms.widget.simple_context_factory'
         tags:
             - { name: "twig.extension" }
+
+    cms.widget.controller.create_widget:
+        class: WidgetBundle\Controller\CreateWidgetAction
+        arguments:
+            - '@cms.widget.repository'
+            - '@form.factory'
+            - '@twig'
+        tags:
+            - { name: "controller.service_arguments" }

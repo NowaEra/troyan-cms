@@ -1,6 +1,11 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+widget_administration:
+    prefix: /admin
+    resource: "../bundle/WidgetBundle/Resources/config/routes.yaml"
+
 sso_auth:
     path: /authenticate/sso
 
