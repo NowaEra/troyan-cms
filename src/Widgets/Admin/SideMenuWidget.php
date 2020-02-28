@@ -7,13 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 use WidgetBundle\Model\WidgetContextInterface;
+use WidgetBundle\Widget\AbstractWidget;
 use WidgetBundle\Widget\WidgetInterface;
 
 /**
  * Class SideMenuWidget
  * Package App\Widgets\Admin
  */
-class SideMenuWidget implements WidgetInterface
+class SideMenuWidget extends AbstractWidget implements WidgetInterface
 {
     /** @var Environment */
     private $twig;
