@@ -8,6 +8,10 @@ parameters:
     sso_client_secret: "%env(OAUTH_CLIENT_SECRET)%"
     sso_host: "%env(OAUTH_HOST)%"
 services:
+
+    # aliased
+    WidgetBundle\Model\SimpleContextFactory: '@cms.widget.simple_context_factory'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

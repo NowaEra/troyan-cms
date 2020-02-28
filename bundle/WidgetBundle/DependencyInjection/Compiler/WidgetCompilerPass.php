@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class WidgetCompilerPass implements CompilerPassInterface
 {
-    const SERVICES_TAG          = 'cms.widget';
+    const SERVICES_TAG = 'cms.widget';
     const REPOSITORY_SERVICE_ID = 'cms.widget.repository';
 
     public function process(ContainerBuilder $container)
@@ -23,7 +23,29 @@ class WidgetCompilerPass implements CompilerPassInterface
         );
 
         foreach ($taggedService as $id => $tag) {
-            $repositoryDefinition->addMethodCall('registerWidget', [$id, new Reference($id)]);
+            $normalisedId = str_replace(
+                ['\\_', '\\'],
+                '.',
+                ltrim(
+                    strtolower(
+                        preg_replace(
+                            '/[A-Z]([A-Z](?![a-z]))*/',
+                            '_$0',
+                            $id
+                        )
+                    ),
+                    '_'
+                )
+            );
+            $repositoryDefinition->addMethodCall(
+                'registerWidget',
+                [$normalisedId, new Reference($id), $id]
+            );
+            $widgetDefinition = $container->getDefinition($id);
+            $widgetDefinition->addMethodCall(
+                'setId',
+                [$normalisedId]
+            );
         }
     }
 }

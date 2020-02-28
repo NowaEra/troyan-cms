@@ -20,8 +20,4 @@ abstract class AbstractWidget implements WidgetInterface
     public function configureEditForm(FormBuilderInterface $builder, WidgetContextInterface $context): void
     {
     }
-
-    public function validateErrors(FormBuilderInterface $builder, Request $request)
-    {
-    }
 }

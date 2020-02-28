@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WidgetBundle\Widget;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use WidgetBundle\Model\WidgetContextInterface;
@@ -20,5 +19,5 @@ interface WidgetInterface
     public function getTemplate(): string;
     public function configureCreateForm(FormBuilderInterface $builder, WidgetContextInterface $context): void;
     public function configureEditForm(FormBuilderInterface $builder, WidgetContextInterface $context): void;
-    public function validateErrors(FormBuilderInterface $builder, Request $request);
+    public function getNewInstance(): WidgetContextInterface;
 }
