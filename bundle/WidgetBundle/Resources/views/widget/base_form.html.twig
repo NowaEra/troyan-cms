@@ -15,8 +15,6 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
         <script type="text/javascript">
-            const controllerPath = '{{ url('widget_create_post', {widgetId: id})|escape('js') }}';
-            const widgetId = '{{ id }}';
             let pending = false;
             let serializeFn = ($form) => {
                 var unindexed_array = $form.serializeArray();
@@ -55,7 +53,7 @@
                         });
                     $existingForm.find('button[type=submit],input').attr('disabled', 'disabled');
                     $.ajax({
-                        url: controllerPath,
+                        url: '{{ url('widget_create_post', {widgetId: id})|escape('js') }}',
                         type: 'POST',
                         dataType: 'json',
                         data: data,
@@ -63,9 +61,7 @@
                         error: function (xhr, err) {
                             if (xhr.status === 400) {
                                 handleResponseFn(xhr.responseText);
-                                return;
                             }
-                            console.error(err);
                         }
                     })
                     ;
