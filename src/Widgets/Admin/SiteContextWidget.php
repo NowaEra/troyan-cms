@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace App\Widgets\Admin;
 
-use App\Context\SiteContext;
-use App\Context\SiteContext as SiteContextService;
-use App\Repository\SiteContextRepository;
+use SiteContextBundle\Context\SiteContextManagerInterface;
+use SiteContextBundle\Repository\SiteContextRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
@@ -29,23 +28,23 @@ class SiteContextWidget extends AbstractWidget implements WidgetInterface
     /** @var SiteContextRepository */
     private $contextRepository;
 
-    /** @var SiteContext */
-    private $siteContextService;
+    /** @var SiteContextManagerInterface */
+    private $siteContextManager;
 
     /**
      * SiteContextWidget constructor.
      *
-     * @param Environment           $twig
-     * @param SimpleContextFactory  $factory
-     * @param SiteContextRepository $contextRepository
-     * @param SiteContext           $siteContext
+     * @param Environment                 $twig
+     * @param SimpleContextFactory        $factory
+     * @param SiteContextRepository       $contextRepository
+     * @param SiteContextManagerInterface $siteContext
      */
-    public function __construct(Environment $twig, SimpleContextFactory $factory, SiteContextRepository $contextRepository, SiteContextService $siteContext)
+    public function __construct(Environment $twig, SimpleContextFactory $factory, SiteContextRepository $contextRepository, SiteContextManagerInterface $siteContext)
     {
         $this->twig               = $twig;
         $this->factory            = $factory;
         $this->contextRepository  = $contextRepository;
-        $this->siteContextService = $siteContext;
+        $this->siteContextManager = $siteContext;
     }
 
     public function configureOptions(OptionsResolver $optionsResolver): void
@@ -75,17 +74,12 @@ class SiteContextWidget extends AbstractWidget implements WidgetInterface
 
     public function getNewInstance(): WidgetContextInterface
     {
-        $currentContext = $this->siteContextService->getContext();
+        $currentContext = $this->siteContextManager->getContext();
 
         return $this->factory->fromArray(
             $this->id,
             [
-                'sites'          => array_filter(
-                    $this->getSites(),
-                    function (\App\Entity\SiteContext $context) use ($currentContext) {
-                        return $currentContext !== $context;
-                    }
-                ),
+                'sites'          => $this->getSites(),
                 'currentContext' => $currentContext
             ]
         );
@@ -95,7 +89,7 @@ class SiteContextWidget extends AbstractWidget implements WidgetInterface
     {
         iF (true === $filterCurrent) {
             return $this->contextRepository->findExcluding(
-                $this->siteContextService->getContext()
+                $this->siteContextManager->getContext()
             );
         }
 

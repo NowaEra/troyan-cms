@@ -11,6 +11,8 @@ services:
 
     # aliased
     WidgetBundle\Model\SimpleContextFactory: '@cms.widget.simple_context_factory'
+    SiteContextBundle\Repository\SiteContextRepository: '@cms.site_context.repository'
+    SiteContextBundle\Context\SiteContextManagerInterface: '@cms.site_context.manager'
 
     # default configuration for services in *this* file
     _defaults:
@@ -45,3 +47,4 @@ services:
     App\Widgets\:
         resource: '../src/Widgets/*'
         tags: ['cms.widget']
+

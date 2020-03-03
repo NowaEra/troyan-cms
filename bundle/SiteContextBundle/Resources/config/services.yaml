@@ -1,0 +1,10 @@
+parameters:
+    cms.site_context.repository.class: SiteContextBundle\Repository\SiteContextRepository
+    cms.site_context.manager.class: SiteContextBundle\Context\SiteContextManager
+
+services:
+    cms.site_context.manager:
+        class: "%cms.site_context.manager.class%"
+        arguments:
+            - '@session'
+            - '@cms.site_context.repository'

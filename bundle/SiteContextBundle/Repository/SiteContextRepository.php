@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace SiteContextBundle\Repository;
 
 use App\Entity\SiteContext;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -9,7 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class SiteContextRepository
- * Package App\Repository
+ * @package SiteContextBundle\Repository
  */
 class SiteContextRepository extends ServiceEntityRepository
 {
@@ -22,11 +22,13 @@ class SiteContextRepository extends ServiceEntityRepository
 
     public function findExcluding(SiteContext $context): array
     {
-        return $this->createQueryBuilder('site_context')
-                    ->where('site_context != :filteredContext')
-                    ->setParameter('filteredContext', $context)
-                    ->getQuery()
-                    ->getResult()
+        return $this
+            ->createQueryBuilder('site_context')
+            ->select('site_context')
+            ->where('site_context != :filteredContext')
+            ->setParameter('filteredContext', $context)
+            ->getQuery()
+            ->getResult()
             ;
     }
 }

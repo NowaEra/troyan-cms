@@ -1,0 +1,3 @@
+site_context:
+    configuration:
+        context_class: App\Entity\SiteContext

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Context\SiteContext;
-use App\Repository\SiteContextRepository;
+use SiteContextBundle\Context\SiteContextManagerInterface;
+use SiteContextBundle\Repository\SiteContextRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ class ContextChangeAction
 {
     const RETURN_PARAMETER = 'return';
 
-    /** @var SiteContext */
+    /** @var SiteContextManagerInterface */
     private $siteContext;
 
     /** @var SiteContextRepository */
@@ -26,10 +26,10 @@ class ContextChangeAction
     /**
      * ContextController constructor.
      *
-     * @param SiteContext           $siteContext
-     * @param SiteContextRepository $repository
+     * @param SiteContextManagerInterface $siteContext
+     * @param SiteContextRepository       $repository
      */
-    public function __construct(SiteContext $siteContext, SiteContextRepository $repository)
+    public function __construct(SiteContextManagerInterface $siteContext, SiteContextRepository $repository)
     {
         $this->siteContext = $siteContext;
         $this->repository  = $repository;
