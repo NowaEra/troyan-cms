@@ -27,17 +27,6 @@ class SideMenuWidget extends AbstractWidget implements WidgetInterface
     /** @var SimpleContextFactory */
     private $factory;
 
-    /** @var string */
-    private $id;
-
-    /**
-     * @param string $id
-     */
-    public function setId(string $id): void
-    {
-        $this->id = $id;
-    }
-
     /**
      * SideMenuWidget constructor.
      *

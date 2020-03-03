@@ -21,3 +21,11 @@ admin_dashboard:
     path: /admin
     defaults:
         _controller: App\Controller\Admin\View\DashboardAction
+
+admin_context_change:
+    path: /admin/context/change/{contextId}
+    defaults:
+        _controller: App\Controller\Admin\ContextChangeAction
+    requirements:
+        contextId: \d+
+        return: http[s]?\:\/\/[a-z0-9\-\.\/]+

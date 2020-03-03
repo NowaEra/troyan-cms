@@ -13,6 +13,17 @@ use WidgetBundle\Model\WidgetContextInterface;
  */
 abstract class AbstractWidget implements WidgetInterface
 {
+    /** @var string */
+    protected $id;
+
+    /**
+     * @param string $id
+     */
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function configureCreateForm(FormBuilderInterface $builder, WidgetContextInterface $context): void
     {
     }

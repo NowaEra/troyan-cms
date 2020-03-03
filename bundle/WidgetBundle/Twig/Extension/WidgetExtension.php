@@ -58,7 +58,8 @@ class WidgetExtension extends AbstractExtension
         if (true === is_string($widget)) {
             /** @var string $widget */
             $widgetService = $this->repository->get($widget);
-            $context       = $this->contextFactory->fromArray($widget, $options);
+            $context       = $widgetService->getNewInstance();
+            $context->mergeConfiguration($options);
         }
 
         if (null === $widgetService) {

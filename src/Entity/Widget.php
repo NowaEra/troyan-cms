@@ -22,7 +22,7 @@ class Widget extends AbstractBaseWidget
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @return int|null
