@@ -48,3 +48,11 @@ services:
         resource: '../src/Widgets/*'
         tags: ['cms.widget']
 
+
+    App\Event\Listener\SetupContextListener:
+        tags:
+            - { name: "kernel.event_listener", event: "kernel.request", method: "onRequest" }
+
+    App\Twig\Extension\TwigRoutingExtension:
+        tags:
+            - { name: "twig.extension" }

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace SiteContextBundle\Context;
 
-use App\Entity\SiteContext;
+use SiteContextBundle\Entity\BaseContext;
 use SiteContextBundle\Repository\SiteContextRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -22,6 +22,9 @@ class SiteContextManager implements SiteContextManagerInterface
     /** @var SiteContextRepository */
     private $contextRepository;
 
+    /** @var BaseContext */
+    private $context;
+
     /**
      * AdminSiteContext constructor.
      *
@@ -34,10 +37,11 @@ class SiteContextManager implements SiteContextManagerInterface
         $this->contextRepository = $contextRepository;
     }
 
-    public function updateContext(SiteContext $context): void
+    public function updateContext(BaseContext $context): void
     {
         $this->session->set(self::CONTEXT_ID_PARAMETER, $context->getId());
         $this->session->set(self::CONTEXT_HOST_PARAMETER, $context->getHost());
+        $this->context = $context;
     }
 
     public function hasContext(): bool
@@ -46,14 +50,18 @@ class SiteContextManager implements SiteContextManagerInterface
             && $this->session->has(self::CONTEXT_HOST_PARAMETER);
     }
 
-    public function getContext(): ?SiteContext
+    public function getContext(): ?BaseContext
     {
         if (false === $this->hasContext()) {
             return null;
         }
 
-        return $this->contextRepository->findOneBy(
-            ['id' => $this->session->get(self::CONTEXT_ID_PARAMETER)]
-        );
+        if (null === $this->context) {
+            $this->context = $this->contextRepository->findOneBy(
+                ['id' => $this->session->get(self::CONTEXT_ID_PARAMETER)]
+            );
+        }
+
+        return $this->context;
     }
 }

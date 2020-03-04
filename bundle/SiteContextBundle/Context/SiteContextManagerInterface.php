@@ -2,7 +2,7 @@
 
 namespace SiteContextBundle\Context;
 
-use App\Entity\SiteContext;
+use SiteContextBundle\Entity\BaseContext;
 
 /**
  * Class SiteContext
@@ -10,9 +10,9 @@ use App\Entity\SiteContext;
  */
 interface SiteContextManagerInterface
 {
-    public function updateContext(SiteContext $context): void;
+    public function updateContext(BaseContext $context): void;
 
     public function hasContext(): bool;
 
-    public function getContext(): ?SiteContext;
+    public function getContext(): ?BaseContext;
 }

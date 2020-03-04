@@ -6,6 +6,7 @@ namespace SiteContextBundle\Repository;
 use App\Entity\SiteContext;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use SiteContextBundle\Entity\BaseContext;
 
 /**
  * Class SiteContextRepository
@@ -20,7 +21,7 @@ class SiteContextRepository extends ServiceEntityRepository
         parent::__construct($registry, SiteContext::class);
     }
 
-    public function findExcluding(SiteContext $context): array
+    public function findExcluding(BaseContext $context): array
     {
         return $this
             ->createQueryBuilder('site_context')
@@ -30,5 +31,21 @@ class SiteContextRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function getDefaultContext(): BaseContext
+    {
+        return $this
+            ->createQueryBuilder('site_context')
+            ->where('site_context.name = :name')
+            ->setParameter('name', self::ROOT_NAME)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
+
+    public function findOneByHost(string $host): ?BaseContext
+    {
+        return $this->findOneBy(['host' => $host]);
     }
 }

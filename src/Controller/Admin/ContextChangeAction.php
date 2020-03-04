@@ -8,6 +8,7 @@ use SiteContextBundle\Repository\SiteContextRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class ContextChangeAction
@@ -23,32 +24,37 @@ class ContextChangeAction
     /** @var SiteContextRepository */
     private $repository;
 
+    /** @var RouterInterface */
+    private $router;
+
     /**
      * ContextController constructor.
      *
      * @param SiteContextManagerInterface $siteContext
      * @param SiteContextRepository       $repository
+     * @param RouterInterface             $router
      */
-    public function __construct(SiteContextManagerInterface $siteContext, SiteContextRepository $repository)
+    public function __construct(SiteContextManagerInterface $siteContext, SiteContextRepository $repository, RouterInterface $router)
     {
         $this->siteContext = $siteContext;
         $this->repository  = $repository;
+        $this->router      = $router;
     }
 
     public function __invoke(int $contextId, Request $request): Response
     {
-        if (false === $request->query->has(self::RETURN_PARAMETER)) {
-            return new Response(
-                sprintf(
-                    'Query parameter "%s" must be set in order to redirect.',
-                    self::RETURN_PARAMETER
-                ), Response::HTTP_BAD_REQUEST
-            );
-        }
-
         $site = $this->repository->findOneBy(['id' => $contextId]);
         $this->siteContext->updateContext($site);
+        $requestContext = $this->router->getContext();
+        $requestContext->setHost($site->getHost());
+        $this->router->setContext($requestContext);
+        $redirectPath = $this->router->generate(
+            $request->query->get('returnRoute'),
+            $request->query->get('returnRouteParams', []),
+            RouterInterface::ABSOLUTE_URL
+        )
+        ;
 
-        return new RedirectResponse($request->query->get(self::RETURN_PARAMETER));
+        return new RedirectResponse($redirectPath);
     }
 }
